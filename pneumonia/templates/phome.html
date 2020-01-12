@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+	
+	<head>
+		<title>Home</title>
+		<meta charset = "utf-8"/>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/pstyles.css') }}">
+		<link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat|Open+Sans|Permanent+Marker&display=swap" rel="stylesheet">
+		<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+		<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+		<script src="/static/pscript.js"></script>
+	</head>
+	
+	<body>
+
+		<div class = "parallax matte"></div>
+			<header></header>
+			<div class = "parallax-text" style = "top: 40%;">
+				<p style = "font-family: 'Montserrat', sans-serif; font-size: 60px;">PHILIPS PNEUMONIA</p>
+				<p style = "padding-top: 20px; font-family: 'Montserrat', sans-serif;">DIAGNOSIS, NOW A BUTTON CLICK AWAY.</p>
+			</div>
+			<input type = "button" class = "btn" value = "SKIP TO PREDICTION" onClick = "document.getElementById('result').scrollIntoView();">
+
+		<div class = "opaque">
+			<div><h2 class = "opaque-text">WHAT WE DO</h2></div>
+			<section>
+				<img src = "https://i.ibb.co/41ZWVLT/xrays.jpg" alt = "xrays" style = "float: left; margin-right: 5%;">
+				<p class = "opaque-text" style = "padding-top: 100px; font-size: 20px;">Our web application aims at improving the accuracy of diagnosis by developing a deep neural network classifier.</p>
+				<p class = "opaque-text" style = "padding-top: 10px; font-size: 20px;">
+				 Doubtful if you have pneumonia or not? </p>
+				 <p class = "opaque-text" style = "padding-top: 10px; font-size: 20px;">
+				 We have an answer </p>
+			</section>
+		</div>
+		
+		<aside id = "prediction"></aside>
+		<div class = "parallax matte" style = "height: 92%;"></div>
+			<div class = "parallax-text" style = "top: 200%; margin: 0px;"><h2 class = "parallax-text">WHAT TO DO</h2></div>
+			
+			<div><p class = "parallax-text steps" style = "font-family: 'Inconsolata', monospace; font-size: 25px; display: inline;">STEP 1 : Have your xray ready as an image file</p></div> 
+			<div><p class = "parallax-text steps" style = "font-family: 'Inconsolata', monospace; font-size: 25px;">STEP 2 : Upload the image to our website</p></div>
+			<div><p class = "parallax-text steps" style = "font-family: 'Inconsolata', monospace; font-size: 25px;">STEP 3 : View your result instantly!</p></div>
+			
+			<a class="prev" onclick="plusSlides(-1)" style = "left: 200px;">❮</a>
+			<a class="next" onclick="plusSlides(1)">❯</a>
+			
+			<div class="dot-container">
+				<span class="dot active" onclick="currentSlide(1)"></span> 
+				<span class="dot" onclick="currentSlide(2)"></span> 
+				<span class="dot" onclick="currentSlide(3)"></span> 
+			</div>
+			
+		<div id = "result" class = "opaque">
+			{% if scroll %}
+			<script>
+			    document.getElementById('{{ scroll }}').scrollIntoView();
+			</script>
+			{% endif %}
+			<div><h2 class = "opaque-text">PREDICTION</h2></div>
+			<section>
+				<form action = "http://localhost:8836/result" method = "POST">
+		         <p style = "font-family: 'Montserrat', sans-serif; font-size: 30px; padding-top: 30px; color:#884EA0">Enter Path Of X-Ray File<input type = "text" name = "path" /></p>
+
+		      	<p><input type = "submit" value = "submit" /></p>
+		         {% if result is defined %}
+
+		            {% for key, value in result.items() %}
+		               <p style = "font-family: 'Montserrat', sans-serif; font-size: 50px; padding-top: 30px; color:blue">{{ value }}</p>
+		            {% endfor %}
+		         {% endif %}
+
+	      		</form>
+			<!-- <button class="filebtn">Upload X-Ray</button>
+			<input id = "myFile" type="file" name="myfile" onchange = "readURL(this);"/> -->
+		</div>
+		
+	</body>
+
+</html>

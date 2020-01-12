@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<h1>Krishna</h1>
+   <body>
+      <form action = "http://localhost:8828/result" method = "POST">
+         <p>Path<input type = "text" name = "path" /></p>
+
+      	<p><input type = "submit" value = "submit" /></p>
+         {% if result is defined %}
+
+            {% for key, value in result.items() %}
+               <p>{{ value }}</p>
+            {% endfor %}
+         {% endif %}
+
+      </form>
+   </body>
+   <h2>Rama</h2>
+</html>
+
